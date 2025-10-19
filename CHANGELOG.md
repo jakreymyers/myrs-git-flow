@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.1] - 2025-10-19
+
+### Fixed
+
+- **Critical**: Removed invalid hooks field from plugin.json that prevented plugin installation
+  - The hooks field contained an unsupported structure with "enabled" and "description" properties
+  - Hooks are now properly loaded from the default `hooks/hooks.json` location
+  - Plugin validation now passes and installation works correctly
+
 ## [1.1.0] - 2024-10-18
 
 ### Added
