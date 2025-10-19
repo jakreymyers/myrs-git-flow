@@ -9,9 +9,5 @@
   "homepage": "https://github.com/jakreymyers/myrs-git-flow",
   "repository": "https://github.com/jakreymyers/myrs-git-flow",
   "license": "MIT",
-  "keywords": ["git", "workflow", "version-control", "branching", "commits", "collaboration", "automation", "best-practices", "hooks"],
-  "hooks": {
-    "enabled": true,
-    "description": "Git Flow validation hooks for conventional commits, branch naming, and protected branch enforcement"
-  }
+  "keywords": ["git", "workflow", "version-control", "branching", "commits", "collaboration", "automation", "best-practices", "hooks"]
 }
