@@ -1,7 +1,7 @@
 {
   "name": "myrs-git-flow",
   "description": "Git workflow automation and best practices for seamless version control, branching strategies, commit conventions, and collaboration workflows",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "author": {
     "name": "Jak Myers",
     "email": "jak@myrs.ai"
