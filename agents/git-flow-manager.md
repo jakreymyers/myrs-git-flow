@@ -90,8 +90,6 @@ When user requests PR creation:
    - [ ] Tests passing
    - [ ] No merge conflicts
    - [ ] Documentation updated
-
-   🤖 Generated with Claude Code
    ```
 4. **Set appropriate labels** based on branch type
 5. **Assign reviewers** if configured
