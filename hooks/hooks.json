@@ -1,0 +1,27 @@
+{
+  "description": "Git Flow validation hooks for conventional commits, branch naming, and protected branch push prevention",
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 \"${CLAUDE_PLUGIN_ROOT}\"/hooks/conventional-commits.py",
+            "description": "Enforce conventional commit message format"
+          },
+          {
+            "type": "command",
+            "command": "python3 \"${CLAUDE_PLUGIN_ROOT}\"/hooks/prevent-direct-push.py",
+            "description": "Prevent direct pushes to main/develop branches"
+          },
+          {
+            "type": "command",
+            "command": "python3 \"${CLAUDE_PLUGIN_ROOT}\"/hooks/validate-branch-name.py",
+            "description": "Validate Git Flow branch naming conventions"
+          }
+        ]
+      }
+    ]
+  }
+}
