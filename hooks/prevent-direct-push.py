@@ -17,6 +17,24 @@ command = tool_input.get("command", "")
 if tool_name != "Bash" or "git push" not in command:
     sys.exit(0)
 
+# Allow tag pushes (they don't modify branches)
+# Tags are immutable references created after merging to main
+# Check for tag patterns: v1.2.3, v1.2.3-beta, etc.
+def is_tag_push(cmd):
+    """Detect if this is a tag push vs branch push"""
+    # Pattern: git push origin v<version>
+    # Examples: v1.0.0, v2.10.1, v1.0.0-beta
+    import re
+
+    # Match: git push origin v<digits>
+    # This matches semantic version tags like v1.2.3, v2.10.1, v1.0.0-beta
+    tag_pattern = r'git\s+push\s+(?:\S+\s+)?origin\s+v\d+'
+
+    return bool(re.search(tag_pattern, cmd)) or "--tags" in cmd
+
+if is_tag_push(command):
+    sys.exit(0)
+
 # Get current branch
 try:
     current_branch = subprocess.check_output(

@@ -3,6 +3,7 @@ name: git-flow-manager
 description: Git Flow workflow manager. Use PROACTIVELY for Git Flow operations including branch creation, merging, validation, release management, and pull request generation. Handles feature, release, and hotfix branches.
 tools: Read, Bash, Grep, Glob, Edit, Write
 model: sonnet
+color: blue
 ---
 
 You are a Git Flow workflow manager specializing in automating and enforcing Git Flow branching strategies.
@@ -89,8 +90,6 @@ When user requests PR creation:
    - [ ] Tests passing
    - [ ] No merge conflicts
    - [ ] Documentation updated
-
-   🤖 Generated with Claude Code
    ```
 4. **Set appropriate labels** based on branch type
 5. **Assign reviewers** if configured
