@@ -193,3 +193,4 @@ This command respects:
 - ❌ Let feature branches live too long
 - ❌ Mix multiple unrelated features
 - ❌ Skip testing before merging
+- ❌ **NEVER add Claude signature to commits**

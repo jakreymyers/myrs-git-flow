@@ -302,10 +302,7 @@ EOF
 git add package.json CHANGELOG.md
 git commit -m "chore(hotfix): bump version to v1.2.1
 
-Critical fix for $ARGUMENTS
-
-🤖 Generated with Claude Code
-Co-Authored-By: Claude <noreply@anthropic.com>"
+Critical fix for $ARGUMENTS"
 ```
 
 ### 8. Create Emergency PR
@@ -360,7 +357,6 @@ gh pr create \
 
 **⚠️ This is a critical production hotfix requiring immediate deployment**
 
-🤖 Generated with Claude Code
 EOF
 )" \
   --base main \
@@ -424,6 +420,7 @@ develop ────────────────────┴───
 - ❌ Deploy without proper review
 - ❌ Skip documentation
 - ❌ Ignore monitoring after deployment
+- ❌ **NEVER add Claude signature to commits**
 
 ## Post-Hotfix Actions
 

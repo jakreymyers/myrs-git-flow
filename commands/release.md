@@ -81,10 +81,7 @@ git add package.json CHANGELOG.md
 git commit -m "chore(release): bump version to ${ARGUMENTS#v}
 
 - Updated package.json version
-- Generated CHANGELOG.md from commits
-
-🤖 Generated with Claude Code
-Co-Authored-By: Claude <noreply@anthropic.com>"
+- Generated CHANGELOG.md from commits"
 
 # Push to remote with tracking
 git push -u origin release/$ARGUMENTS
@@ -322,7 +319,6 @@ Target: main
 5. Monitor for issues
 
 ---
-🤖 Generated with Claude Code
 EOF
 )" \
   --base main \
@@ -378,3 +374,4 @@ EOF
 - ❌ Skip CHANGELOG generation
 - ❌ Forget to merge back to develop
 - ❌ Create releases without team approval
+- ❌ **NEVER add Claude signature to commits**

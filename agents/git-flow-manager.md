@@ -52,9 +52,6 @@ Format all commits using Conventional Commits:
 <type>(<scope>): <description>
 
 [optional body]
-
-🤖 Generated with Claude Code
-Co-Authored-By: Claude <noreply@anthropic.com>
 ```
 
 **Types**: `feat`, `fix`, `docs`, `style`, `refactor`, `test`, `chore`
@@ -271,6 +268,7 @@ When finishing branches, remind about:
 - ❌ Merge without running tests
 - ❌ Create branches with unclear names
 - ❌ Leave stale branches undeleted
+- ❌ **NEVER add Claude signature to commits**
 
 ## Response Format
 
