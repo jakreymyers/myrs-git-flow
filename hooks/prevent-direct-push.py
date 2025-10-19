@@ -17,6 +17,10 @@ command = tool_input.get("command", "")
 if tool_name != "Bash" or "git push" not in command:
     sys.exit(0)
 
+# Allow tag pushes (they don't modify branches)
+if "--tags" in command or command.startswith("git push origin v"):
+    sys.exit(0)
+
 # Get current branch
 try:
     current_branch = subprocess.check_output(
