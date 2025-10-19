@@ -30,7 +30,21 @@ if branch_name in ["main", "develop"]:
 
 # Validate Git Flow naming convention
 if not re.match(r'^(feature|release|hotfix)/', branch_name):
-    reason = f"""❌ Invalid Git Flow branch name: {branch_name}
+    user_msg = f"""🚫 Branch creation blocked
+
+Situation: Branch name doesn't follow Git Flow convention
+Complication: Name must start with feature/, release/, or hotfix/
+Resolution: Use a valid Git Flow branch name
+
+Your branch: {branch_name}
+
+Correct patterns:
+  feature/add-user-login
+  release/v1.2.0
+  hotfix/fix-crash
+"""
+
+    technical_reason = f"""❌ Invalid Git Flow branch name: {branch_name}
 
 Git Flow branches must follow these patterns:
   • feature/<descriptive-name>
@@ -52,20 +66,35 @@ Invalid:
   /release <version> - Create release branch
   /hotfix <name>   - Create hotfix branch"""
 
+    # Output JSON with BOTH systemMessage (for user) and permissionDecisionReason (for Claude)
     output = {
+        "systemMessage": f"\n{user_msg}\n",  # Concise message for user
         "hookSpecificOutput": {
             "hookEventName": "PreToolUse",
             "permissionDecision": "deny",
-            "permissionDecisionReason": reason
+            "permissionDecisionReason": technical_reason  # Technical details for Claude
         }
     }
     print(json.dumps(output))
-    sys.exit(0)
+    sys.exit(0)  # Exit 0 with JSON output
 
 # Validate release version format
 if branch_name.startswith("release/"):
     if not re.match(r'^release/v\d+\.\d+\.\d+(-[a-zA-Z0-9.]+)?$', branch_name):
-        reason = f"""❌ Invalid release version: {branch_name}
+        user_msg = f"""🚫 Branch creation blocked
+
+Situation: Release branch has invalid version format
+Complication: Must use semantic versioning (vMAJOR.MINOR.PATCH)
+Resolution: Use proper version format
+
+Your branch: {branch_name}
+
+Correct format:
+  release/v1.2.0
+  release/v2.0.0-beta.1
+"""
+
+        technical_reason = f"""❌ Invalid release version: {branch_name}
 
 Release branches must follow semantic versioning:
   release/vMAJOR.MINOR.PATCH[-prerelease]
@@ -82,15 +111,17 @@ Invalid:
 
 💡 Use: /release v1.2.0"""
 
+        # Output JSON with BOTH systemMessage (for user) and permissionDecisionReason (for Claude)
         output = {
+            "systemMessage": f"\n{user_msg}\n",  # Concise message for user
             "hookSpecificOutput": {
                 "hookEventName": "PreToolUse",
                 "permissionDecision": "deny",
-                "permissionDecisionReason": reason
+                "permissionDecisionReason": technical_reason  # Technical details for Claude
             }
         }
         print(json.dumps(output))
-        sys.exit(0)
+        sys.exit(0)  # Exit 0 with JSON output
 
 # Allow the command
 sys.exit(0)
