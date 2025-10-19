@@ -17,18 +17,45 @@ command = tool_input.get("command", "")
 if tool_name != "Bash" or "git commit" not in command:
     sys.exit(0)
 
+# Check for heredoc format FIRST (before trying to extract message)
+if '$(cat <<' in command or 'cat <<' in command:
+    reason = f"""❌ Heredoc syntax not supported in commit hooks
+
+Your command uses heredoc ($(cat <<EOF...EOF)) which doesn't work in pre-commit hooks.
+
+**Solution**: Use multiple -m flags instead:
+
+git commit -m "type(scope): short description" \\
+  -m "Longer description paragraph 1" \\
+  -m "Longer description paragraph 2"
+
+Example:
+git commit -m "feat(skill): add Git Flow skill" \\
+  -m "Add comprehensive Git Flow implementation" \\
+  -m "Includes 8 scripts and rationalization table"
+
+**Why this happens**: Hooks receive the command string before shell expansion,
+so $(cat <<EOF) is literal text, not the expanded content."""
+
+    output = {
+        "hookSpecificOutput": {
+            "hookEventName": "PreToolUse",
+            "permissionDecision": "deny",
+            "permissionDecisionReason": reason
+        }
+    }
+    print(json.dumps(output))
+    sys.exit(0)
+
 # Extract commit message from -m flag
 # Handle both -m "message" and -m 'message' formats
 match = re.search(r'git commit.*?-m\s+["\']([^"\']+)["\']', command)
+
 if not match:
-    # Also try heredoc format: -m "$(cat <<'EOF' ... EOF)"
-    heredoc_match = re.search(r'git commit.*?-m\s+"?\$\(cat\s+<<["\']?EOF["\']?\s*\n(.+?)\nEOF', command, re.DOTALL)
-    if heredoc_match:
-        commit_msg = heredoc_match.group(1).strip()
-    else:
-        sys.exit(0)  # Can't extract message, allow it
-else:
-    commit_msg = match.group(1)
+    # Can't extract message, allow it (might be using git commit without -m)
+    sys.exit(0)
+
+commit_msg = match.group(1)
 
 # Check if message follows Conventional Commits format
 # Format: type(scope)?: description
