@@ -190,13 +190,19 @@ def main():
     print("\n🧪 Running tests...")
     test_output, test_error = run_tests()
     if test_error and "command not found" not in test_error and "no test specified" not in test_error:
-        print(f"❌ Tests failed: {test_error}")
-        response = input("\n⚠️  Continue anyway? (NOT RECOMMENDED) [y/N]: ").strip().lower()
-        if response != 'y':
-            print("Aborted.")
-            sys.exit(1)
+        print(f"\n❌ TESTS FAILED - Cannot complete Git Flow finish")
+        print("=" * 60)
+        print(f"\n{test_error}")
+        print("\n💡 Git Flow Policy: Tests must pass before finishing branches")
+        print("\nTo fix this:")
+        print("  1. Review the test failures above")
+        print("  2. Fix the failing tests")
+        print("  3. Commit your fixes")
+        print("  4. Run this script again")
+        print("\n⚠️  You cannot proceed with failing tests.")
+        sys.exit(1)
     elif "No tests found" in test_output:
-        print("⚠️  No tests found")
+        print("⚠️  No tests found (proceeding)")
     else:
         print("✓ Tests passed")
     
