@@ -1,0 +1,13 @@
+{
+  "name": "myrs-git-flow",
+  "description": "Git workflow automation and best practices for seamless version control, branching strategies, commit conventions, and collaboration workflows",
+  "version": "1.0.0",
+  "author": {
+    "name": "Jak Myers",
+    "email": "jak@myrs.ai"
+  },
+  "homepage": "https://github.com/jakreymyers/myrs-git-flow",
+  "repository": "https://github.com/jakreymyers/myrs-git-flow",
+  "license": "MIT",
+  "keywords": ["git", "workflow", "version-control", "branching", "commits", "collaboration", "automation", "best-practices"]
+}
