@@ -19,7 +19,18 @@ if tool_name != "Bash" or "git commit" not in command:
 
 # Check for heredoc format FIRST (before trying to extract message)
 if '$(cat <<' in command or 'cat <<' in command:
-    reason = f"""❌ Heredoc syntax not supported in commit hooks
+    user_msg = """🚫 Commit blocked
+
+Situation: You're trying to commit with heredoc syntax
+Complication: Hooks run before shell expansion, so heredoc doesn't work
+Resolution: Use multiple -m flags instead
+
+git commit -m "feat: your change" \\
+           -m "Additional details" \\
+           -m "More context if needed"
+"""
+
+    technical_reason = f"""❌ Heredoc syntax not supported in commit hooks
 
 Your command uses heredoc ($(cat <<EOF...EOF)) which doesn't work in pre-commit hooks.
 
@@ -37,15 +48,17 @@ git commit -m "feat(skill): add Git Flow skill" \\
 **Why this happens**: Hooks receive the command string before shell expansion,
 so $(cat <<EOF) is literal text, not the expanded content."""
 
+    # Output JSON with BOTH systemMessage (for user) and permissionDecisionReason (for Claude)
     output = {
+        "systemMessage": f"\n{user_msg}\n",  # Concise message for user
         "hookSpecificOutput": {
             "hookEventName": "PreToolUse",
             "permissionDecision": "deny",
-            "permissionDecisionReason": reason
+            "permissionDecisionReason": technical_reason  # Technical details for Claude
         }
     }
     print(json.dumps(output))
-    sys.exit(0)
+    sys.exit(0)  # Exit 0 with JSON output
 
 # Extract commit message from -m flag
 # Handle both -m "message" and -m 'message' formats
@@ -63,7 +76,23 @@ commit_msg = match.group(1)
 conventional_pattern = r'^(feat|fix|docs|style|refactor|perf|test|chore|ci|build|revert)(\(.+\))?:\s.+'
 
 if not re.match(conventional_pattern, commit_msg):
-    reason = f"""❌ Invalid commit message format
+    user_msg = f"""🚫 Commit blocked
+
+Situation: Your commit message doesn't follow the required format
+Complication: Message must start with a type (feat/fix/docs/etc)
+Resolution: Rewrite using this pattern
+
+git commit -m "type: brief description"
+
+Examples:
+  feat: add user login
+  fix: resolve crash on startup
+  docs: update README
+
+Your message: {commit_msg}
+"""
+
+    technical_reason = f"""❌ Invalid commit message format
 
 Your message: {commit_msg}
 
@@ -97,15 +126,17 @@ Invalid:
 
 💡 Tip: Start your message with one of the types above followed by a colon and space."""
 
+    # Output JSON with BOTH systemMessage (for user) and permissionDecisionReason (for Claude)
     output = {
+        "systemMessage": f"\n{user_msg}\n",  # Concise message for user
         "hookSpecificOutput": {
             "hookEventName": "PreToolUse",
             "permissionDecision": "deny",
-            "permissionDecisionReason": reason
+            "permissionDecisionReason": technical_reason  # Technical details for Claude
         }
     }
     print(json.dumps(output))
-    sys.exit(0)
+    sys.exit(0)  # Exit 0 with JSON output
 
 # Allow the command
 sys.exit(0)
