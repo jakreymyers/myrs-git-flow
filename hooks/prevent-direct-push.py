@@ -41,46 +41,54 @@ targets_protected = (
 # Block direct push to main/develop (unless force push which is already dangerous)
 if targets_protected and not is_force_push:
     if current_branch in ["main", "develop"] or "origin main" in push_cmd or "origin develop" in push_cmd:
-        reason = f"""❌ Direct push to main/develop is not allowed!
+        user_msg = f"""🚫 Push blocked
 
-Protected branches:
-  - main (production)
-  - develop (integration)
+Situation: You're pushing to a protected branch ({current_branch})
+Complication: main/develop require pull requests for team review
+Resolution: Use a feature branch instead
 
-Git Flow workflow:
-  1. Create a feature branch:
-     /feature <name>
+Quick fix:
+  git checkout -b feature/your-feature-name
+  git push origin feature/your-feature-name
 
-  2. Make your changes and commit
+Then create a PR for review.
+"""
 
-  3. Push feature branch:
-     git push origin feature/<name>
+        technical_reason = f"""❌ Cannot push to protected branch!
 
-  4. Create pull request:
-     gh pr create
+**What you tried**: `{command}`
+**Current branch**: {current_branch}
+**Problem**: Direct pushes to main/develop are blocked by Git Flow policy
 
-  5. After approval, merge with:
-     /finish
+**Solution**: Use Git Flow branches instead:
 
-For releases:
-  /release <version> → PR → /finish
+1. **For features**:
+   - Create: `/myrs-git-flow:feature <name>` or `git checkout -b feature/<name>`
+   - Push: `git push origin feature/<name>`
 
-For hotfixes:
-  /hotfix <name> → PR → /finish
+2. **For releases**:
+   - Create: `/myrs-git-flow:release <version>` or `git checkout -b release/v<version>`
+   - Push: `git push origin release/v<version>`
 
-Current branch: {current_branch}
+3. **For hotfixes**:
+   - Create: `/myrs-git-flow:hotfix <name>` or `git checkout -b hotfix/<name>`
+   - Push: `git push origin hotfix/<name>`
 
-💡 Use feature/release/hotfix branches instead of pushing directly to main/develop."""
+**Why this matters**: Protected branches require pull requests for code review, CI checks, and team visibility.
 
+💡 **Quick fix**: `git checkout -b feature/<descriptive-name>` then `git push origin feature/<descriptive-name>`"""
+
+        # Output JSON with BOTH systemMessage (for user) and permissionDecisionReason (for Claude)
         output = {
+            "systemMessage": f"\n{user_msg}\n",  # Concise message for user
             "hookSpecificOutput": {
                 "hookEventName": "PreToolUse",
                 "permissionDecision": "deny",
-                "permissionDecisionReason": reason
+                "permissionDecisionReason": technical_reason  # Technical details for Claude
             }
         }
         print(json.dumps(output))
-        sys.exit(0)
+        sys.exit(0)  # Exit 0 with JSON output
 
 # Allow the command
 sys.exit(0)
