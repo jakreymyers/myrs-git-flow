@@ -2,7 +2,7 @@
 
 ## Overview
 
-This Git Flow skill has been created based on your MYRS Git Flow plugin for Claude Code. It provides comprehensive Git Flow workflow management capabilities that Claude can use to help with version control, branching strategies, and release management.
+This Git Flow skill is part of the MYRS Git Flow plugin for Claude Code. It provides comprehensive Git Flow workflow management capabilities that Claude can use to help with version control, branching strategies, and release management.
 
 ## What's Included
 
@@ -75,14 +75,6 @@ When using Claude with this skill, you can ask questions like:
 - "Help me set up Git Flow CI/CD with GitHub Actions"
 - "How do I resolve merge conflicts in a release branch?"
 - "What version should my next release be based on recent commits?"
-
-## Integration with Claude Code
-
-While this skill is designed for general Claude use, it incorporates the same Git Flow principles and patterns from your MYRS Git Flow plugin. The main differences:
-
-1. **Scripts vs Commands**: Instead of slash commands like `/myrs-git-flow:feature`, the skill uses Python scripts that can be executed directly
-2. **No Hooks**: The skill doesn't include the Git hooks (as those need to be installed separately), but it's aware of their rules and won't suggest actions that would violate them
-3. **Universal Use**: This skill can be used in any Git repository, not just within Claude Code
 
 ## Best Practices Enforced
 
