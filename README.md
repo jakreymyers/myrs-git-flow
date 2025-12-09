@@ -139,7 +139,7 @@ Five commands you type to trigger structured Git Flow workflows:
 
 **Git Flow implementation using Anthropic's [Claude Skills](https://www.anthropic.com/news/skills)**
 
-**What Makes This Revolutionary:**
+**What Makes This Valuable**
 - **Model-invoked**: Claude decides when to read it (not user-invoked like commands)
 - **Progressive disclosure**: Only accessed when Git Flow context is relevant
 - **Universal access**: Available to main agent AND git-flow-manager subagent
@@ -172,12 +172,6 @@ Five commands you type to trigger structured Git Flow workflows:
   - `troubleshooting.md` - Common issues and recovery procedures
   - `ci_integration.md` - CI/CD pipeline integration
 
-**4. TESTING.md** - Complete validation report:
-  - RED-GREEN-REFACTOR methodology (TDD for process documentation)
-  - 8 pressure scenarios tested with 10+ agent trials
-  - Captured rationalizations and counters
-  - 100% compliance in GREEN phase after skill enhancement
-
 **File location**: `skills/git-flow/` (SKILL.md + scripts/ + references/)
 
 ### 🔒 Validation Hooks
@@ -199,9 +193,8 @@ Three hooks ensure Git Flow best practices (installed automatically):
 - Validates format: feature/*, release/*, hotfix/*
 - Prevents non-standard branch naming
 
-### 📚 Documentation & Testing
+### 📚 Documentation
 
-- **TESTING.md**: Complete validation report (RED-GREEN-REFACTOR methodology)
 - **agents/git-flow-manager.md**: Subagent system prompt and configuration
 - **commands/*.md**: 5 slash command definitions with workflows
 - **skills/git-flow/SKILL.md**: Model-invoked knowledge base
@@ -311,43 +304,6 @@ Get a comprehensive view of:
 - Active branches by type
 - Merge readiness
 - Recommended next steps
-
-## Technical Innovation
-
-### Why MYRS Git Flow is Different
-
-**Claude Skills Integration** (First in Git tooling):
-- Anthropic just announced [Skills](https://www.anthropic.com/news/skills) as a revolutionary new capability
-- MYRS Git Flow is among the first tools to leverage this technology
-- Enables true progressive disclosure - agents access detailed knowledge only when needed
-- Reduces context usage while providing deep expertise
-
-**Triple-Mode Flexibility**:
-1. **Subagent preserves context** - Specialized AI with separate context handles Git complexity
-2. **Commands orchestrate workflows** - User-invoked automation with pre-validation
-3. **Skills provide intelligence** - Model-invoked knowledge with progressive disclosure
-
-**Validated Quality**:
-- Comprehensive testing using RED-GREEN-REFACTOR methodology (TDD for process documentation)
-- 8 pressure scenarios tested with 10+ agent trials
-- Captured and countered real rationalization patterns
-- 4 automation scripts validated with edge case testing
-- See `TESTING.md` for complete validation report
-
-**Production-Ready Automation**:
-- 8 Python scripts with comprehensive validation
-- Error handling with helpful guidance
-- Visual output formatting
-- Time-quantified procedures (no vague "this will take a while")
-- Tested against actual Git repositories
-
-**No Competitor Offers**:
-- ❌ Other Git tools: Manual commands only
-- ❌ AI assistants: General knowledge without domain expertise
-- ❌ Git Flow extensions: No AI integration
-- ✅ **MYRS Git Flow**: Subagent architecture + slash commands + Claude Skills
-
-This combination of **subagents** (separate AI contexts), **slash commands** (user-invoked workflows), and **Claude Skills** (model-invoked progressive disclosure) creates a Git Flow experience that's impossible to replicate without Claude Code's architecture and Anthropic's [newly-released Skills technology](https://www.anthropic.com/news/skills).
 
 ## Resources
 
